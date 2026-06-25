@@ -1,0 +1,34 @@
+# ── 비밀값 / 환경
+.env
+
+# ── Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.eggs/
+build/
+dist/
+
+# ── 가상환경 (uv)
+.venv/
+venv/
+
+# ── job scratch / 산출물 (NVMe scratch, durable 아님)
+# 디렉토리 구조는 남기고 내용물만 무시 (.gitkeep 으로 빈 디렉토리 추적)
+output/*
+
+# ── 로그
+*.log
+logs/
+
+# ── 모델 가중치 (고정 경로 /stg/models, 레포에 넣지 않음)
+*.pt
+*.bin
+*.onnx
+
+# ── OS / 에디터
+.DS_Store
+.idea/
+.vscode/
+*.swp
