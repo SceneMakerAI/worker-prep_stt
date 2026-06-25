@@ -53,7 +53,7 @@ def _build_cmd(src: Path, audio_out: Path, pattern: Path) -> str:
     ⚠ fps 는 줄이지 않는다(원본 유지): 1fps 로 줄이면 segment 먹서가 오디오를 6초 경계에 못 맞춰
       청크 오디오가 겹침/잘림. 원본 fps 면 영상·오디오 둘 다 6초로 깔끔히 잘림.
     """
-    bin_ = config.FFMPEG_BIN
+    bin_ = config.FFMPEG_DIR / "ffmpeg"
 
     if config.FFMPEG_MODE == "gpu":
         # GPU: NVDEC 디코드 + scale_cuda + NVENC. 6초 키프레임은 force_key_frames + -forced-idr 1
@@ -83,9 +83,10 @@ def _build_cmd(src: Path, audio_out: Path, pattern: Path) -> str:
 
 
 def _duration(path: Path) -> float:
-    """ffprobe 로 미디어 전체 길이(초) 조회."""
+    """ffprobe 로 미디어 전체 길이(초) 조회. ffprobe 는 FFMPEG_DIR 에서 찾음(PATH 비의존)."""
+    ffprobe = str(config.FFMPEG_DIR / "ffprobe")
     proc = subprocess.run(
-        ["ffprobe", "-v", "error", "-show_entries", "format=duration",
+        [ffprobe, "-v", "error", "-show_entries", "format=duration",
          "-of", "csv=p=0", str(path)],
         capture_output=True, text=True, timeout=60,
     )

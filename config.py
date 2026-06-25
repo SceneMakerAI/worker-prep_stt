@@ -33,7 +33,7 @@ S3URL = os.getenv("S3URL")
 
 # ── ffmpeg 실행 (CPU / GPU 전환).
 FFMPEG_MODE = "gpu"                             # "cpu" | "gpu"
-FFMPEG_BIN = os.getenv("FFMPEG_BIN")     # 바이너리 경로 (gpu 면 /opt/ffmpeg-nvidia/ffmpeg)
+FFMPEG_DIR = Path(os.getenv("FFMPEG_DIR"))     # ffmpeg, ffprobe 가 들어있는 디렉토리
 FFMPEG_GPU = os.getenv("FFMPEG_GPU")                     # gpu 모드일 때 사용할 GPU 인덱스 (STT 와 분리)
 FFMPEG_ENC_THREADS = 16                         # cpu 모드 인코드 스레드. ⚠ 디코드는 1 고정(멀티면 VP9 디코드 race 로 세그폴트)
 
