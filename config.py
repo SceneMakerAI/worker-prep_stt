@@ -24,20 +24,18 @@ logging.basicConfig(
 )
 
 
-
-
 # ── 스토리지
 # JOBS_DIR = Path("/mnt/nvme/jobs")   # job 단위 scratch. {job_id}/ 아래 source/audio/result
-JOBS_DIR = Path("output")
+JOBS_DIR = Path(os.getenv("JOBS_DIR"))
 TARGET_SR = 16000                    # mono 16kHz
 # 영상 청크 옵션(6초/1024x768/1fps)은 ffmpeg.py 에 하드코딩.
 S3URL = os.getenv("S3URL")
 
 # ── ffmpeg 실행 (CPU / GPU 전환).
-FFMPEG_MODE = "gpu"                       # "cpu" | "gpu"
-FFMPEG_BIN = "/usr/local/ffmpeg-gpu/ffmpeg"                     # 바이너리 경로 (gpu 면 /opt/ffmpeg-nvidia/ffmpeg)
-FFMPEG_GPU = "0"                          # gpu 모드일 때 사용할 GPU 인덱스 (STT 와 분리)
-FFMPEG_ENC_THREADS = 16                   # cpu 모드 인코드 스레드. ⚠ 디코드는 1 고정(멀티면 VP9 디코드 race 로 세그폴트)
+FFMPEG_MODE = "gpu"                             # "cpu" | "gpu"
+FFMPEG_BIN = os.getenv("FFMPEG_BIN")     # 바이너리 경로 (gpu 면 /opt/ffmpeg-nvidia/ffmpeg)
+FFMPEG_GPU = os.getenv("FFMPEG_GPU")                     # gpu 모드일 때 사용할 GPU 인덱스 (STT 와 분리)
+FFMPEG_ENC_THREADS = 16                         # cpu 모드 인코드 스레드. ⚠ 디코드는 1 고정(멀티면 VP9 디코드 race 로 세그폴트)
 
 
 
@@ -54,7 +52,7 @@ SILERO_VAD_REPO = MODELS_ROOT / "silero-vad"          # torch.hub source="local"
 
 WHISPER = {
     "MODEL" : MODELS_ROOT / "whisper-large-v3",
-    "GPU_NUM" : 1,
+    "GPU_NUM" : int(os.getenv("WHISPER_GPU_NUM")),
     "COMPUTE_TYPE" : "float16",
 }
 
