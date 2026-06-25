@@ -50,10 +50,11 @@ lib/
 
 ## 요구사항
 
-- Python **3.13+**
+- Python **3.12–3.13**
 - [uv](https://github.com/astral-sh/uv)
-- NVIDIA GPU — **2× RTX 4090 (24 GB)** 에서 테스트. 기본 GPU 배치: GPU 0 = denoise + ffmpeg, GPU 1 = Whisper + 화자 구분.
-- `/opt/ffmpeg-nvidia/ffmpeg` 에 NVIDIA 빌드 ffmpeg (`FFMPEG_MODE=gpu` 용; 시스템 ffmpeg 를 쓰려면 `cpu` 로 전환).
+- **Rust 툴체인 (`cargo`)** — `deepfilterlib` 는 미리 빌드된 wheel 이 없어 설치 시 소스에서 컴파일됨. `dnf install -y cargo` 또는 [rustup](https://rustup.rs) 으로 설치.
+- CUDA 지원 NVIDIA GPU — 모델별 GPU 배치는 `config.py` 에서 설정.
+- `/usr/local/ffmpeg-gpu/ffmpeg` 에 NVIDIA 빌드 ffmpeg (`FFMPEG_MODE=gpu` 용; 시스템 ffmpeg 를 쓰려면 `cpu` 로 전환).
 - `$MODELS_ROOT` 아래 모델 가중치 로컬 존재 — 런타임에 HF 다운로드 없이 오프라인 로드.
 
 ## 설치

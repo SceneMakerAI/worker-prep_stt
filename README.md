@@ -50,10 +50,11 @@ lib/
 
 ## Requirements
 
-- Python **3.13+**
+- Python **3.12–3.13**
 - [uv](https://github.com/astral-sh/uv)
-- NVIDIA GPU — tested on **2× RTX 4090 (24 GB)**. Default GPU split: denoise + ffmpeg on GPU 0, Whisper + diarization on GPU 1.
-- An NVIDIA-enabled `ffmpeg` build at `/opt/ffmpeg-nvidia/ffmpeg` (for `FFMPEG_MODE=gpu`; switch to `cpu` to use system ffmpeg).
+- **Rust toolchain (`cargo`)** — `deepfilterlib` ships no prebuilt wheel and is compiled from source at install time. Install via `dnf install -y cargo` or [rustup](https://rustup.rs).
+- NVIDIA GPU with CUDA — per-model GPU assignment is configurable in `config.py`.
+- An NVIDIA-enabled `ffmpeg` build at `/usr/local/ffmpeg-gpu/ffmpeg` (for `FFMPEG_MODE=gpu`; switch to `cpu` to use system ffmpeg).
 - Model weights present locally under `$MODELS_ROOT` (see below) — loaded offline, no HF download at runtime.
 
 ## Setup
