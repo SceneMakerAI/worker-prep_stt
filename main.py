@@ -11,7 +11,6 @@ app 생성 + 라우터 등록만. 실제 로직은 lib/ 아래 계층에 둠:
 """
 import faulthandler
 import logging
-import os
 import ssl
 import time
 from contextlib import asynccontextmanager
@@ -63,6 +62,4 @@ def root():
 
 
 if __name__ == "__main__":
-    os.makedirs(config.LOG_DIR, exist_ok=True)
-
     uvicorn.run(app, host=config.HOST, port=config.PORT)

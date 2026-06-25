@@ -15,6 +15,7 @@ PORT = int(os.getenv("PORT"))
 
 # ── 로그
 LOG_DIR = "/usr/service/logs/scenemaker"
+os.makedirs(LOG_DIR, exist_ok=True)   # basicConfig 가 import 시점에 파일을 열므로 디렉토리 먼저 보장
 logging.basicConfig(
     format='%(asctime)s %(levelname)s [%(filename)s:%(funcName)s:%(lineno)d] - %(message)s',
     filename=f"{LOG_DIR}/prep_stt.log",
