@@ -56,11 +56,10 @@ def _build_cmd(src: Path, audio_out: Path, pattern: Path) -> str:
 
     if config.FFMPEG_MODE == "gpu":
         # GPU: NVDEC 디코드 + scale_cuda + NVENC. 6초 키프레임은 force_key_frames + -forced-idr 1
-        #   (nvenc 는 forced-idr 없으면 force_key_frames 무시). STT 와 다른 GPU 로 핀(-hwaccel_device).
-        #   ⚠ -c:v vp9_cuvid 는 입력이 VP9 일 때만.
+        #   (nvenc 는 forced-idr 없으면 force_key_frames 무시). STT 와 다른 GPU 로 핀(-hwaccel_device).        
         return (
             f"{bin_} -y -hwaccel cuda -hwaccel_output_format cuda "
-            f"-hwaccel_device {config.FFMPEG_GPU} -c:v vp9_cuvid -i {src} "
+            f"-hwaccel_device {config.FFMPEG_GPU}  -i {src} "
             f"-map 0:a -vn -ac 1 -ar {config.TARGET_SR} -c:a pcm_s16le {audio_out} "
             f"-map 0:v -map 0:a -vf scale_cuda=1024:768 -c:v h264_nvenc "
             f"-force_key_frames 'expr:gte(t,n_forced*6)' -forced-idr 1 -c:a aac "
